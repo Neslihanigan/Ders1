@@ -1,186 +1,44 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etkinlik Güncelle</title>
-    <link rel="stylesheet" href="css/2416501027.css">
+    <link rel="stylesheet" href="css/2311012037.css">
 </head>
-
 <body>
-
-<header>
-
-    <h1>Etkinlik Güncelle</h1>
-
-    <nav>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="etkinlikler.html">Etkinlikler</a>
-        <a href="etkinlik-detay.html">Detay</a>
-        <a href="etkinlik-ekle.html">Ekle</a>
-        <a href="etkinlik-guncelle.html">Güncelle</a>
-    </nav>
-
-</header>
-
-
-<main>
-
-    <form action="#" method="post">
-
-
-        <p>
-
-            <label for="ad">
-                Etkinlik Adı
-            </label>
-
-            <br>
-
-            <input
-                type="text"
-                id="ad"
-                name="ad"
-                value="Kariyer Günleri 2026"
-                required
-            >
-
-        </p>
-
-
-        <p>
-
-            <label for="kategori">
-                Kategori
-            </label>
-
-            <br>
-
-            <select
-                id="kategori"
-                name="kategori"
-                required
-            >
-
-                <option value="Seminer" selected>
-                    Seminer
-                </option>
-
-                <option value="Atölye">
-                    Atölye
-                </option>
-
-                <option value="Söyleşi">
-                    Söyleşi
-                </option>
-
-                <option value="Konferans">
-                    Konferans
-                </option>
-
-            </select>
-
-        </p>
-
-
-        <p>
-
-            <label for="tarih">
-                Tarih
-            </label>
-
-            <br>
-
-            <input
-                type="date"
-                id="tarih"
-                name="tarih"
-                value="2026-10-12"
-                required
-            >
-
-        </p>
-
-
-        <p>
-
-            <label for="saat">
-                Saat
-            </label>
-
-            <br>
-
-            <input
-                type="time"
-                id="saat"
-                name="saat"
-                value="14:00"
-                required
-            >
-
-        </p>
-
-
-        <p>
-
-            <label for="yer">
-                Yer
-            </label>
-
-            <br>
-
-            <input
-                type="text"
-                id="yer"
-                name="yer"
-                value="A Blok Konferans Salonu"
-                required
-            >
-
-        </p>
-
-
-        <p>
-
-            <label for="aciklama">
-                Açıklama
-            </label>
-
-            <br>
-
-            <textarea
-                id="aciklama"
-                name="aciklama"
-                rows="5"
-                cols="40"
-                required
-            >Kariyer Günleri 2026 etkinliği öğrencilerin kariyer fırsatları hakkında bilgi edinmesini amaçlamaktadır.</textarea>
-
-        </p>
-
-
-        <p>
-
-            <button type="submit">
-                Güncelle
-            </button>
-
-        </p>
-
-
-    </form>
-
-</main>
-
-
-<footer>
-
-    <p>
-        Kampüs Etkinlikleri - 2026
-    </p>
-
-</footer>
-
+    <header>
+        <h1>Etkinlik Güncelle</h1>
+        <nav>
+            <a href="index.html">Ana Sayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="etkinlik-ekle.html">Ekle</a>
+            <a href="etkinlik-guncelle.html" class="aktif">Güncelle</a>
+        </nav>
+    </header>
+    <main>
+        <form action="#" method="POST">
+            <p>
+                <label for="etkinlikAdi">Etkinlik adı</label>
+                <input type="text" id="etkinlikAdi" name="etkinlikAdi" value="Kariyer Günleri 2026" required placeholder=" ">
+            </p>
+            <p>
+                <label for="kategori">Kategori</label>
+                <select id="kategori" name="kategori" required>
+                    <option value="seminer" selected>Seminer</option>
+                    <option value="atolye">Atölye</option>
+                </select>
+            </p>
+            <p>
+                <label for="tarihSaat">Tarih</label>
+                <input type="datetime-local" id="tarihSaat" name="tarihSaat" value="2026-10-12T14:00" required>
+            </p>
+            <p>
+                <label for="aciklama">Açıklama</label>
+                <textarea id="aciklama" name="aciklama" rows="5" required placeholder=" ">Mezun söyleşileri</textarea>
+            </p>
+            <button type="submit">Güncelle</button>
+        </form>
+    </main>
 </body>
-
 </html>

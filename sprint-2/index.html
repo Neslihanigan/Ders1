@@ -1,99 +1,41 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kampüs Etkinlikleri</title>
-    <link rel="stylesheet" href="css/2416501027.css">
+    <link rel="stylesheet" href="css/2311012037.css">
 </head>
-
 <body>
-
-<header>
-
-    <h1>Kampüs Etkinlikleri</h1>
-
-    <nav>
-        <a href="index.html">Ana Sayfa</a>
-        <a href="etkinlikler.html">Etkinlikler</a>
-        <a href="etkinlik-detay.html">Detay</a>
-        <a href="etkinlik-ekle.html">Ekle</a>
-        <a href="etkinlik-guncelle.html">Güncelle</a>
-    </nav>
-
-</header>
-
-
-<main>
-
-    <section>
-
-        <h2>Hoş Geldiniz</h2>
-
-        <p>
-            Kampüs Etkinlikleri uygulamasına hoş geldiniz.
-            Bu uygulama sayesinde kampüste düzenlenen
-            etkinlikleri görüntüleyebilirsiniz.
-        </p>
-
-    </section>
-
-
-    <section>
-
-        <h2>Yaklaşan Etkinlikler</h2>
-
-
-        <article>
-
-            <h3>Kariyer Günleri 2026</h3>
-
-            <p>
-                Seminer ·
-                <time datetime="2026-10-12">
-                    12 Ekim 2026
-                </time>
-                · A Blok
-            </p>
-
-            <a href="etkinlik-detay.html">
-                Detayları gör
-            </a>
-
-        </article>
-
-
-        <article>
-
-            <h3>Robotik Atölyesi</h3>
-
-            <p>
-                Atölye ·
-                <time datetime="2026-10-20">
-                    20 Ekim 2026
-                </time>
-                · Lab 2
-            </p>
-
-            <a href="etkinlikler.html">
-                Etkinliklere git
-            </a>
-
-        </article>
-
-    </section>
-
-</main>
-
-
-<footer>
-
-    <p>
-        Kampüs Etkinlikleri - 2026
-    </p>
-
-</footer>
-
+    <header>
+        <h1>Kampüs Etkinlikleri</h1>
+        <nav>
+            <a href="index.html" class="aktif">Ana Sayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="etkinlik-ekle.html">Ekle</a>
+            <a href="etkinlik-guncelle.html">Güncelle</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <p>Fakültedeki seminer, atölye ve söyleşileri tek yerden takip edin.</p>
+        </section>
+        <section>
+            <h2>Yaklaşan 2 etkinlik</h2>
+            <div class="etkinlik-grid ikili-grid">
+                <article>
+                    <h3>Kariyer Günleri</h3>
+                    <p>12 Ekim</p>
+                    <a href="etkinlik-detay.html">Detay →</a>
+                </article>
+                <article>
+                    <h3>Robotik Atölyesi</h3>
+                    <p>20 Ekim</p>
+                    <a href="etkinlik-detay.html">Detay →</a>
+                </article>
+            </div>
+            <a href="etkinlikler.html" style="display: block; margin-top: 1rem;">Tüm etkinlikleri gör →</a>
+        </section>
+    </main>
 </body>
-
 </html>
