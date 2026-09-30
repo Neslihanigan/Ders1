@@ -1,1 +1,1 @@
-https://ders1-rho.vercel.app/
+https://ders1-sprint-2-le35.vercel.app/
