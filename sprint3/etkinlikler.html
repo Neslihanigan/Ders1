@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tüm Etkinlikler — Kampüs Etkinlikleri</title>
+  <link rel="stylesheet" href="css/2416501027.css">
+  <script type="module" src="js/event-list.js"></script>
+</head>
+<body>
+  <div class="sayfa-kapsayici">
+    <header class="site-header">
+      <h1 class="site-baslik">Tüm Etkinlikler</h1>
+      <p class="site-alt-aciklama">Ekim ayında kampüste düzenlenen etkinlikler.</p>
+      <nav class="ana-menu">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="etkinlikler.html" class="aktif">Etkinlikler</a>
+        <a href="etkinlik-ekle.html">Ekle</a>
+      </nav>
+    </header>
+
+    <main class="ana-icerik">
+      <!-- Adım 6: Filtre Formu -->
+      <form id="filtre-formu" class="filtre-kutusu" onsubmit="event.preventDefault();" style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+        <div style="display:flex; flex-direction:column; gap:0.4rem;">
+          <label for="arama" style="font-weight:bold; color:var(--renk-ana);">Etkinlik ara</label>
+          <input type="search" id="arama" placeholder="Örn. atölye, kariyer..." style="padding:0.6rem; border:1px solid #ddd; border-radius:6px; font-family:inherit;">
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.4rem;">
+          <label for="kategori-filtre" style="font-weight:bold; color:var(--renk-ana);">Kategori</label>
+          <select id="kategori-filtre" style="padding:0.6rem; border:1px solid #ddd; border-radius:6px; font-family:inherit;">
+            <option value="">Tümü</option>
+          </select>
+        </div>
+      </form>
+
+      <!-- Adım 7: Sonuç Satırı -->
+      <p id="sonuc" style="font-weight:bold; color:var(--renk-ana); margin-bottom:1rem;"></p>
+
+      <!-- 6 kart JS ile buraya basılır -->
+      <section id="etkinlik-listesi" class="etkinlik-listesi uc-sutun"></section>
+    </main>
+
+    <footer class="site-footer">
+      <p> Neslihan İgan · 2416501027 · 2026</p>
+    </footer>
+  </div>
+</body>
+</html>
