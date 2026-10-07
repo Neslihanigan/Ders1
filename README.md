@@ -1,1 +1,1 @@
-https://ders1-sprint-2-vzjt.vercel.app/
+https://ders1-sprint3.vercel.app/
