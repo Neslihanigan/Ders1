@@ -1,4 +1,4 @@
-https://ders1-sprint3.vercel.app/
+https://ders1-bnqv.vercel.app/
 
 # Sprint 4 — Kampüs Etkinlikleri (Vite + React + TypeScript)
 
