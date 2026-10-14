@@ -63,3 +63,4 @@ export const events: CampusEvent[] = [
     description: "Üniversite yıllarında start-up kurma ve ilk yatırımı bulma adımları.",
   },
 ];
+

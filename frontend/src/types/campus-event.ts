@@ -11,3 +11,4 @@ export interface CampusEvent {
   description: string;
   image?: string;
 }
+

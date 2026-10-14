@@ -27,3 +27,4 @@ export function findEventById(
 ): CampusEvent | undefined {
   return list.find((e) => e.id === id);
 }
+
