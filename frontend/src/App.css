@@ -26,7 +26,7 @@ main, footer {
 header {
     background-color: var(--renk-ana);
     color: white;
-    padding: var(--bosluk-m) max(var(--bosluk-m), calc((100% - 1200px) / 2));
+    padding: var(--bosluk-m) max(var(--bosluk-m), calc((100% - 1200px) / 2)) 0.5rem;
 }
 
 header h1 {
@@ -34,11 +34,14 @@ header h1 {
 }
 
 header p {
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.5rem 0;
     opacity: 0.95;
 }
 
-nav {
+nav,
+nav.menu {
+    background-color: var(--renk-ana);
+    padding: 0 max(var(--bosluk-m), calc((100% - 1200px) / 2)) var(--bosluk-m);
     display: flex;
     gap: 0.5rem;
     align-items: center;
