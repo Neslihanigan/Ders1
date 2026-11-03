@@ -10,7 +10,7 @@
 
 | Platform | Bağlantı |
 |---|---|
-| 🌐 **Vercel Canlı Yayın (Deploy)** | [https://ders1-bnqv.vercel.app/](https://ders1-bnqv.vercel.app/) |
+| 🌐 **Vercel Canlı Yayın (Deploy)** | [https://neslihanigan-frontend.vercel.app/](https://neslihanigan-frontend.vercel.app/) |
 | 📦 **GitHub Deposu** | [https://github.com/Neslihanigan/Ders1](https://github.com/Neslihanigan/Ders1) |
 
 ---
