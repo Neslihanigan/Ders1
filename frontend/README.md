@@ -1,19 +1,47 @@
-https://ders1-sprint3.vercel.app/
+# 🎓 Kampüs Etkinlikleri Yönetim Sistemi (Frontend)
 
-# Sprint 4 — Kampüs Etkinlikleri (Vite + React + TypeScript)
+> **Sprint 6 + Vize Teslimi — Router, Context API, Controlled Forms ve Yönetim**  
+> **Geliştirici:** Neslihan İgan  
+> **Öğrenci No:** 2416501027  
 
-Bu sprintte Kampüs Etkinlikleri uygulaması React ve TypeScript teknolojileriyle yeniden geliştirilmiştir.
+---
 
-## Proje Dosya Yapısı ve Görevleri
+## 🔗 Proje Bağlantıları
 
-- **package.json**: Proje adı, komutlar (dev, build) ve kullanılan paketlerin listesini tanımlar.
-- **package-lock.json**: Projeye yüklenen npm paketlerinin kilitli tam sürümlerini belirtir.
-- **node_modules/**: Projenin çalışması için indirilen npm paketlerini barındırır; Git'e dahil edilmez.
-- **tsconfig*.json**: TypeScript derleme kurallarını ve tip denetim ayarlarını içerir.
-- **vite.config.ts**: Vite yapılandırma ayarlarını ve React eklentisini barındırır.
-- **index.html**: React uygulamasının render edildiği tek HTML dosyasıdır; içinde `#root` elemanı bulunur.
-- **src/main.tsx**: React uygulamasını başlatan ve `App` bileşenini DOM'daki `#root` elemanına bağlayan giriş noktasıdır.
-- **src/App.tsx**: Uygulamanın 5 sayfasını (Ana Sayfa, Etkinlikler, Detay, Ekle, Güncelle) ve state yönetimini içeren ana bileşendir.
-- **src/App.css**: Uygulamanın stillerini barındırır; Sprint 3'teki CSS kurallarını içerir.
-- **src/index.css**: Tüm sayfaya genel stiller için ayrılmıştır; bu sprintte boş bırakılmıştır.
-- **public/**: Derleme işlemine girmeden doğrudan kök dizinden sunulan statik dosyaları (afis.svg, favicon.svg vb.) barındırır.
+- 🌐 **Vercel Canlı Yayın:** [https://ders1-bnqv.vercel.app/](https://ders1-bnqv.vercel.app/)
+- 📦 **GitHub Deposu:** [https://github.com/Neslihanigan/Ders1](https://github.com/Neslihanigan/Ders1)
+
+---
+
+## 💻 Kurulum ve Çalıştırma
+
+```bash
+# Bağımlılıkları yükleyin
+npm install
+
+# Geliştirme sunucusunu çalıştırın
+npm run dev
+
+# Kod denetimi yapın
+npm run lint
+
+# Üretim derlemesi oluşturun
+npm run build
+```
+
+---
+
+## 🗺️ Rota Listesi (10 Adres, 10 Sayfa)
+
+| # | Rota | Sayfa Bileşeni | Açıklama |
+|---|---|---|---|
+| 1 | `/` | `HomePage` | En yakın 2 etkinlik ve hızlı istatistikler |
+| 2 | `/events` | `EventsPage` | Arama ve filtreli etkinlik listesi |
+| 3 | `/events/:id` | `EventDetailPage` | Etkinlik künyesi, afiş ve detayları (`useParams`) |
+| 4 | `/login` | `LoginPage` | E-posta ve şifreli giriş sayfası |
+| 5 | `/register` | `RegisterPage` | Yeni kullanıcı kayıt sayfası |
+| 6 | `/forgot-password` | `ForgotPasswordPage` | Şifre sıfırlama bağlantısı talep sayfası |
+| 7 | `/admin` | `AdminPage` | Etkinlik yönetim tablosu, onaylı silme ve güncelleme |
+| 8 | `/admin/new` | `AddEventPage` | Yeni etkinlik ekleme formu (`addEvent`) |
+| 9 | `/admin/:id/edit` | `EditEventPage` | Etkinlik düzenleme formu (`updateEvent`) |
+| 10 | `*` | `NotFoundPage` | 404 Hata sayfası |

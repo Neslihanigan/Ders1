@@ -278,6 +278,106 @@ button, .btn {
     display: inline-block;
 }
 
+.tablo {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: var(--kose);
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.tablo th {
+    background: var(--renk-ana);
+    color: #fff;
+    padding: 0.8rem 1rem;
+    text-align: left;
+}
+
+.tablo td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.tablo tr:last-child td {
+    border-bottom: none;
+}
+
+.islemler {
+    display: flex;
+    gap: var(--bosluk-s, 0.5rem);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.buton-sil {
+    background-color: var(--renk-hata, #c62828) !important;
+}
+
+.hata-metni {
+    color: var(--renk-hata, #c62828);
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: var(--renk-hata, #c62828);
+}
+
+.mesaj {
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--kose);
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+}
+
+.mesaj-basari {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+@media (max-width: 699px) {
+    .tablo, .tablo tbody {
+        display: block;
+        width: 100%;
+        background: transparent;
+    }
+
+    .tablo thead {
+        display: none;
+    }
+
+    .tablo tr {
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: var(--kose);
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #fff;
+    }
+
+    .tablo td {
+        display: block;
+        border: none;
+        padding: 0.35rem 0;
+    }
+
+    .tablo td.islemler {
+        display: flex;
+        margin-top: 0.8rem;
+    }
+
+    .tablo td[data-baslik]::before {
+        content: attr(data-baslik) ": ";
+        font-weight: 700;
+    }
+}
+
 .hata-kutusu {
     border: 2px solid #c62828;
     background-color: #ffebee;
