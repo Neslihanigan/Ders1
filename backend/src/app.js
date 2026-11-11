@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import eventRoutes from "./routes/event-routes.js";
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.use("/events", eventRoutes);
+
+// Eşleşmeyen rotalar için 404 yanıtı
 app.use((req, res) => {
   res.status(404).json({ error: { message: "Route not found" } });
 });
