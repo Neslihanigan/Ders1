@@ -1,6 +1,6 @@
-# Kampüs Etkinlikleri — Backend REST API (Sprint 7)
+# Kampüs Etkinlikleri — Backend REST API (Sprint 8: Kalıcı Veri & MongoDB)
 
-Bu servis, Kampüs Etkinlikleri uygulamasının backend katmanıdır. **Node.js**, **Express**, **dotenv** ve **cors** kullanılarak geliştirilmiş bir REST API sunucusudur.
+Bu servis, Kampüs Etkinlikleri uygulamasının veritabanı destekli backend katmanıdır. **Node.js**, **Express**, **MongoDB**, **Mongoose**, **dotenv** ve **cors** kullanılarak geliştirilmiştir.
 
 - **Geliştirici:** Neslihan İgan  
 - **Öğrenci Numarası:** `2416501027`
@@ -9,52 +9,55 @@ Bu servis, Kampüs Etkinlikleri uygulamasının backend katmanıdır. **Node.js*
 
 ## 🚀 Kurulum ve Çalıştırma
 
-Geliştirme ortamında çalıştırmak için aşağıdaki adımları takip edin:
+Projeyi yerel geliştirme ortamında çalıştırmak için:
 
 ```bash
 # 1. Backend klasörüne geçin
 cd backend
 
-# 2. Gerekli bağımlılıkları yükleyin
+# 2. Bağımlılıkları yükleyin (Mongoose dahil)
 npm install
 
-# 3. Ortam değişkenlerini hazırlayın (.env oluşturun)
+# 3. Ortam değişkenlerini ayarlayın (.env oluşturun)
 cp .env.example .env
+# .env dosyasındaki MONGODB_URI adresini kendi MongoDB Atlas veya yerel bağlantınızla doldurun
 
-# 4. Geliştirme modunda başlatın (node --watch ile otomatik yeniden başlatma)
+# 4. Veritabanını 6 örnek etkinlik ile doldurun (Seed)
+npm run seed
+
+# 5. Geliştirme sunucusunu başlatın
 npm run dev
 
-# veya normal başlatmak için:
+# veya üretim modunda başlatmak için:
 npm start
 ```
 
-Sunucu varsayılan olarak `http://localhost:3000` adresinde dinlemeye başlar.
+Sunucu `http://localhost:3000` adresinde çalışmaya başlar.
 
 ---
 
 ## ⚙️ Ortam Değişkenleri (.env)
 
-Projede ayarlar koda sabit yazılmayıp `.env` dosyası üzerinden okunur:
-
-| Değişken | Açıklama | Varsayılan |
+| Değişken | Açıklama | Örnek (.env.example) |
 |---|---|---|
-| `PORT` | API sunucusunun çalışacağı port numarası | `3000` |
+| `PORT` | API sunucusunun çalışacağı port | `3000` |
+| `MONGODB_URI` | MongoDB veritabanı bağlantı URI'si | `mongodb://127.0.0.1:27017/kampus` |
 
-> **Önemli Not:** `.env` dosyası hassas veriler içerebileceğinden `.gitignore` ile korunur ve GitHub'a yüklenmez. Örnek yapılandırma için `.env.example` dosyası kullanılabilir.
+> ⚠️ **Güvenlik Uyarısı:** Gerçek veritabanı şifresi içeren `.env` dosyası asla GitHub'a gönderilmez (`.gitignore` ile korunmaktadır).
 
 ---
 
 ## 📋 REST API Sözleşmesi
 
-Tüm istekler `http://localhost:3000` temel adresine yapılır. Yanıtlar her zaman JSON formatındadır.
+Tüm istekler `http://localhost:3000` adresine yapılır. Yanıtlar standart JSON formatındadır.
 
-| Metot | Uç Nokta (Endpoint) | Amaç | Başarılı Durum Kodu | Hata Durum Kodu | Durum |
+| Metot | Uç Nokta (Endpoint) | Amaç | Başarılı Kodu | Hata Kodu | Açıklama |
 |---|---|---|---|---|---|
-| `GET` | `/health` | Sunucu sağlık kontrolü ve öğrenci no doğrulama | `200 OK` | — | Bu sprint |
-| `GET` | `/events` | Tüm etkinlik listesini getirir (`?category=` ile filtreleme desteklenir) | `200 OK` | — | Bu sprint |
-| `GET` | `/events/:id` | ID'si verilen etkinliğin detayını getirir | `200 OK` | `404 Not Found` | Bu sprint |
-| `POST` | `/events` | Yeni etkinlik ekler (`title`, `category`, `date` zorunludur) | `201 Created` | `400 Bad Request` | Bu sprint |
-| `PATCH` | `/events/:id` | Mevcut etkinliği günceller | `200 OK` | `400`, `404` | Sprint 9 |
+| `GET` | `/health` | Sunucu sağlık kontrolü ve öğrenci no doğrulama | `200 OK` | — | `status: "ok"`, `student: "2416501027"` |
+| `GET` | `/events` | Tüm etkinlik listesini getirir (`?category=` desteklenir) | `200 OK` | — | Tarihe göre sıralı, `_id` ve timestamps içerir |
+| `GET` | `/events/:id` | ID'si verilen etkinliğin detayını getirir | `200 OK` | `404 Not Found` | Geçersiz veya bulunamayan id için 404 döner |
+| `POST` | `/events` | Yeni etkinlik ekler | `201 Created` | `400 Bad Request` | Schema doğrulaması (title, category, date zorunlu) |
+| `PATCH` | `/events/:id` | Etkinliği günceller | `200 OK` | `400`, `404` | Sprint 9 |
 | `DELETE` | `/events/:id` | Etkinliği siler | `204 No Content` | `404 Not Found` | Sprint 9 |
 
 ---
@@ -71,22 +74,22 @@ Tüm hata yanıtları standart bir yapı içinde döner:
 }
 ```
 
-### Durum Kodları (Status Codes):
-- `200 OK`: İstek başarılı bir şekilde tamamlandı.
-- `201 Created`: Yeni kayıt başarıyla oluşturuldu.
-- `204 No Content`: İşlem başarılı, dönecek içerik yok (Silme işlemlerinde).
-- `400 Bad Request`: Eksik veya geçersiz gövde (body) verisi (örn: `title`, `category` veya `date` eksik).
-- `404 Not Found`: İstenen kaynak veya rota bulunamadı.
+### Durum Kodları:
+- `200 OK`: Başarılı GET isteği.
+- `201 Created`: Kayıt başarıyla MongoDB'ye eklendi ve `_id` atandı.
+- `400 Bad Request`: Mongoose Schema doğrulama hatası (eksik alan veya geçersiz kategori vb.).
+- `404 Not Found`: İstenen kayıt bulunamadı veya geçersiz `_id` formatı.
+- `500 Internal Server Error`: Beklenmeyen sunucu hatası (merkezi hata middleware'i tarafından yakalanır).
 
 ---
 
 ## 🧪 Postman İstek Koleksiyonu
 
-Tüm uç noktalar test edilmiş ve `backend/requests/kampus-api.json` dosyası içerisine Postman Collection (v2.1) formatında kaydedilmiştir:
+Test istekleri `backend/requests/kampus-api.json` dosyasına Postman Collection (v2.1) formatında kaydedilmiştir:
 
-1. `GET /health` $\rightarrow$ `200 OK` (`status`, `time`, `student: "2416501027"`)
-2. `GET /events` $\rightarrow$ `200 OK` (6 adet başlangıç etkinliği)
-3. `GET /events/event-2` $\rightarrow$ `200 OK` (Seçili etkinlik detayı)
+1. `GET /health` $\rightarrow$ `200 OK`
+2. `GET /events` $\rightarrow$ `200 OK` (6 seed etkinliği)
+3. `GET /events/:id` $\rightarrow$ `200 OK` (Geçerli MongoDB `_id` ile)
 4. `GET /events/yok` $\rightarrow$ `404 Not Found` (`error.message`)
-5. `POST /events` (Tam gövde) $\rightarrow$ `201 Created` (Oluşturulan yeni etkinlik nesnesi)
-6. `POST /events` (Eksik gövde) $\rightarrow$ `400 Bad Request` (`title, category and date are required`)
+5. `POST /events` (Tam gövde) $\rightarrow$ `201 Created` (Yeni `_id` ve timestamps ile)
+6. `POST /events` (Eksik gövde) $\rightarrow$ `400 Bad Request` (Schema validation hatası)
