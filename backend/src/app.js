@@ -18,9 +18,15 @@ app.get("/health", (req, res) => {
 
 app.use("/events", eventRoutes);
 
-// Eşleşmeyen rotalar için 404 yanıtı
+// Eşleşme yoksa 404
 app.use((req, res) => {
   res.status(404).json({ error: { message: "Route not found" } });
+});
+
+// Adım 8 · Hata yakalayıcı middleware (4 parametre)
+app.use((err, req, res, next) => {
+  console.error(err.message);
+  res.status(500).json({ error: { message: "Server error" } });
 });
 
 export default app;

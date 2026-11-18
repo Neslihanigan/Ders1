@@ -12,3 +12,4 @@ router.get("/:id", getEventById);
 router.post("/", createEvent);
 
 export default router;
+
