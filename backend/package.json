@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/seed.js"
+    "seed": "node src/seed.js",
+    "test": "newman run requests/kampus-api.json -r cli,json --reporter-json-export requests/run-results.json"
   },
   "keywords": [],
   "author": "Neslihan Igan",

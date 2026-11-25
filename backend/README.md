@@ -1,4 +1,4 @@
-# Kampüs Etkinlikleri — Backend REST API (Sprint 8: Kalıcı Veri & MongoDB)
+# Kampüs Etkinlikleri — Backend REST API (Sprint 9: Tam CRUD & Sorgular)
 
 Bu servis, Kampüs Etkinlikleri uygulamasının veritabanı destekli backend katmanıdır. **Node.js**, **Express**, **MongoDB**, **Mongoose**, **dotenv** ve **cors** kullanılarak geliştirilmiştir.
 
@@ -51,14 +51,15 @@ Sunucu `http://localhost:3000` adresinde çalışmaya başlar.
 
 Tüm istekler `http://localhost:3000` adresine yapılır. Yanıtlar standart JSON formatındadır.
 
-| Metot | Uç Nokta (Endpoint) | Amaç | Başarılı Kodu | Hata Kodu | Açıklama |
+| Metot | Uç Nokta (Endpoint) | Amaç | Başarılı Kodu | Hata Kodu | Açıklama / Kurallar |
 |---|---|---|---|---|---|
 | `GET` | `/health` | Sunucu sağlık kontrolü ve öğrenci no doğrulama | `200 OK` | — | `status: "ok"`, `student: "2416501027"` |
-| `GET` | `/events` | Tüm etkinlik listesini getirir (`?category=` desteklenir) | `200 OK` | — | Tarihe göre sıralı, `_id` ve timestamps içerir |
+| `GET` | `/events` | Tüm etkinlik listesini getirir (`?search=` ve `?category=` filtreleri) | `200 OK` | — | Tarihe göre sıralı; `search` başlıkta büyük/küçük harf duyarsız regex arar |
+| `GET` | `/events/upcoming` | Bugünden sonraki yaklaşan etkinlikleri getirir | `200 OK` | — | `date >= bugünün başı`, `{ date: 1, time: 1 }` artan sıralı |
 | `GET` | `/events/:id` | ID'si verilen etkinliğin detayını getirir | `200 OK` | `404 Not Found` | Geçersiz veya bulunamayan id için 404 döner |
-| `POST` | `/events` | Yeni etkinlik ekler | `201 Created` | `400 Bad Request` | Schema doğrulaması (title, category, date zorunlu) |
-| `PATCH` | `/events/:id` | Etkinliği günceller | `200 OK` | `400`, `404` | Sprint 9 |
-| `DELETE` | `/events/:id` | Etkinliği siler | `204 No Content` | `404 Not Found` | Sprint 9 |
+| `POST` | `/events` | Yeni etkinlik ekler | `201 Created` | `400 Bad Request` | Schema doğrulaması (GG-AA-YYYY formatı, enum, minlength vb.) |
+| `PATCH` | `/events/:id` | Etkinliği kısmi günceller | `200 OK` | `400`, `404` | Çalışıyor (`returnDocument: "after"`, `runValidators: true`, korunan alan kontrolü) |
+| `DELETE` | `/events/:id` | Etkinliği veritabanından siler | `204 No Content` | `404 Not Found` | Çalışıyor (Yanıt gövdesi boştur) |
 
 ---
 
@@ -75,21 +76,30 @@ Tüm hata yanıtları standart bir yapı içinde döner:
 ```
 
 ### Durum Kodları:
-- `200 OK`: Başarılı GET isteği.
+- `200 OK`: Başarılı GET ve PATCH isteği.
 - `201 Created`: Kayıt başarıyla MongoDB'ye eklendi ve `_id` atandı.
-- `400 Bad Request`: Mongoose Schema doğrulama hatası (eksik alan veya geçersiz kategori vb.).
+- `204 No Content`: Kayıt başarıyla silindi (yanıt gövdesi yok).
+- `400 Bad Request`: Schema doğrulaması (geçersiz tarih formatı, eksik alan, geçersiz enum, boş body veya `_id` korumalı alan değiştirme girişimi).
 - `404 Not Found`: İstenen kayıt bulunamadı veya geçersiz `_id` formatı.
 - `500 Internal Server Error`: Beklenmeyen sunucu hatası (merkezi hata middleware'i tarafından yakalanır).
 
 ---
 
-## 🧪 Postman İstek Koleksiyonu
+## 🧪 Postman & Newman Testleri (Sprint 9)
 
-Test istekleri `backend/requests/kampus-api.json` dosyasına Postman Collection (v2.1) formatında kaydedilmiştir:
+Koleksiyon: `backend/requests/kampus-api.json`  
+Runner Sonuçları: `backend/requests/run-results.json`
 
-1. `GET /health` $\rightarrow$ `200 OK`
-2. `GET /events` $\rightarrow$ `200 OK` (6 seed etkinliği)
-3. `GET /events/:id` $\rightarrow$ `200 OK` (Geçerli MongoDB `_id` ile)
-4. `GET /events/yok` $\rightarrow$ `404 Not Found` (`error.message`)
-5. `POST /events` (Tam gövde) $\rightarrow$ `201 Created` (Yeni `_id` ve timestamps ile)
-6. `POST /events` (Eksik gövde) $\rightarrow$ `400 Bad Request` (Schema validation hatası)
+### Newman ile Testleri Çalıştırma:
+```bash
+# Backend sunucusu çalışırken:
+newman run requests/kampus-api.json -r cli,json --reporter-json-export requests/run-results.json
+
+# Veya hocanın canlı test adresinden doğrudan:
+newman run https://webdersi.vercel.app/test.json
+```
+
+### Test Özeti:
+- **Toplam İstek Sayısı:** 18
+- **Toplam Doğrulama (Assertion):** 45
+- **Hata (Failed):** 0 (%100 Başarı)

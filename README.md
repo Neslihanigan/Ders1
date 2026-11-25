@@ -1,8 +1,8 @@
 # 🎓 Kampüs Etkinlikleri Yönetim Sistemi
 
-> **Sprint 8 — Kalıcı Veri: MongoDB ve Mongoose**  
+> **Sprint 9 — Tam CRUD (PATCH, DELETE ve Sorgular)**  
 > **Geliştirici:** Neslihan İgan  
-> **Öğrenci No:** 2416501027  
+> **Öğrenci No:** `2416501027`  
 
 ---
 
@@ -25,7 +25,7 @@
 
 ## 🚀 Kurulum ve Çalıştırma
 
-### 1. Backend Servisini Başlatma (MongoDB Kalıcı Veri)
+### 1. Backend Servisini Başlatma (MongoDB Kalıcı Veri & Tam CRUD)
 ```bash
 cd backend
 npm install
@@ -37,7 +37,11 @@ npm run seed
 
 # Geliştirme sunucusunu başlatın
 npm run dev
-# Sunucu http://localhost:3000 adresinde dinlemeye başlar
+
+# Postman / Newman testlerini çalıştırmak için:
+npm test
+# veya
+newman run requests/kampus-api.json -r cli,json --reporter-json-export requests/run-results.json
 ```
 
 ### 2. Frontend Uygulamasını Başlatma
@@ -50,16 +54,19 @@ npm run dev
 
 ---
 
-## 📋 Backend REST API Sözleşmesi (Sprint 8)
+## 📋 Backend REST API Sözleşmesi (Sprint 9)
 
 | Metot | Uç Nokta | Açıklama | Başarılı Kodu | Hata Kodu |
 |---|---|---|---|---|
 | `GET` | `/health` | Sunucu sağlık kontrolü ve öğrenci no doğrulama | `200 OK` | — |
-| `GET` | `/events` | Tüm etkinlik listesi (MongoDB `_id` ve timestamps ile) | `200 OK` | — |
+| `GET` | `/events` | Tüm etkinlik listesi (`?search=` ve `?category=` filtreleri) | `200 OK` | — |
+| `GET` | `/events/upcoming` | Bugünden sonraki yaklaşan etkinlikler (tarihe göre sıralı) | `200 OK` | — |
 | `GET` | `/events/:id` | `_id` ile tekil etkinlik detayı | `200 OK` | `404 Not Found` |
-| `POST` | `/events` | Yeni etkinlik ekler (Schema doğrulaması) | `201 Created` | `400 Bad Request` |
+| `POST` | `/events` | Yeni etkinlik ekler (GG-AA-YYYY tarih ve şema kontrolü) | `201 Created` | `400 Bad Request` |
+| `PATCH` | `/events/:id` | Etkinliği kısmi günceller (Sadece gönderilen alanlar) | `200 OK` | `400`, `404` |
+| `DELETE` | `/events/:id` | Etkinliği siler (Yanıt gövdesi boş döner) | `204 No Content` | `404 Not Found` |
 
-> Tüm API test istekleri `backend/requests/kampus-api.json` içerisine Postman Collection (v2.1) olarak eklenmiştir.
+> Tüm API test istekleri `backend/requests/kampus-api.json` içerisine Postman Collection (v2.1) olarak eklenmiştir. Test koşum sonuçları `backend/requests/run-results.json` dosyasındadır (18/18 istek, 45/45 doğrulama başarılı).
 
 ---
 
@@ -69,24 +76,27 @@ npm run dev
 .
 ├── backend/
 │   ├── requests/
-│   │   └── kampus-api.json      # Postman collection (v2.1)
+│   │   ├── kampus-api.json      # Postman collection (v2.1) - 18 test isteği
+│   │   └── run-results.json     # Newman collection runner koşum sonuçları
 │   ├── src/
 │   │   ├── config/
 │   │   │   └── database.js      # Mongoose bağlantı modülü
 │   │   ├── controllers/
-│   │   │   └── event-controller.js # Mongoose find, findById, create
+│   │   │   └── event-controller.js # CRUD, filtreleme, regex arama controller
 │   │   ├── data/
-│   │   │   └── seed-events.js   # 6 adet başlangıç etkinliği
+│   │   │   └── seed-events.js   # 6 adet başlangıç etkinliği (geçmiş ve gelecek)
 │   │   ├── models/
-│   │   │   └── event-model.js   # Mongoose Event şeması ve modeli
+│   │   │   └── event-model.js   # Mongoose Event şeması ve getters/setters
 │   │   ├── routes/
-│   │   │   └── event-routes.js
+│   │   │   └── event-routes.js  # /events rotaları (/upcoming önce)
+│   │   ├── utils/
+│   │   │   └── date.js          # GG-AA-YYYY tarih parseDate/formatDate/todayStart
 │   │   ├── app.js               # Express, CORS, 404 ve merkezi hata middleware
 │   │   ├── seed.js              # deleteMany + insertMany seed scripti
 │   │   └── server.js            # Port dinleyici ve veritabanı başlatıcı
 │   ├── .env.example             # Yer tutucu örnek ortam değişkenleri
 │   ├── .gitignore               # .env ve node_modules koruması
-│   ├── package.json             # express, mongoose, dotenv, cors
+│   ├── package.json             # express, mongoose, dotenv, cors, newman
 │   └── README.md
 ├── frontend/                    # React + Vite arayüzü
 ├── README.md
